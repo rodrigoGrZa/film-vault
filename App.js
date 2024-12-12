@@ -1,20 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState, Suspense } from "react";
+import { SQLiteProvider } from "expo-sqlite";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./screens/Home";
+import Loader from "./components/Loader";
+import { loadDatabase } from "./services/databaseService";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const prepareApp = async () => {
+      try {
+        await loadDatabase();
+        setIsReady(true);
+      } catch (error) {
+        console.error("Error inicializando la base de datos:", error);
+      }
+    };
+
+    prepareApp();
+  }, []);
+
+  if (!isReady) {
+    return <Loader />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Suspense fallback={<Loader />}>
+        <SQLiteProvider databaseName="coppermind.db" useSuspense>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                headerTitle: "Film Vault",
+                headerLargeTitle: true,
+                headerStyle: {
+                  backgroundColor: '#171717',
+                },
+                headerTintColor: '#fff'
+              }}
+            />
+          </Stack.Navigator>
+        </SQLiteProvider>
+      </Suspense>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
