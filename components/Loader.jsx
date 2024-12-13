@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   circle: {
-    width: 70, // Tamaño del círculo
+    width: 70,
     height: 70,
     borderWidth: 2,
-    borderColor: "#000", // color negro del contorno
-    borderRadius: 35, // radio para hacerlo circular
+    borderColor: "#000",
+    borderRadius: 35,
   },
 });

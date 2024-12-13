@@ -1,7 +1,7 @@
 {
   "name": "film-vault",
   "version": "1.0.0",
-  "main": "expo/AppEntry.js",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -17,7 +17,6 @@
     "expo-file-system": "~17.0.1",
     "expo-sqlite": "~14.0.6",
     "expo-status-bar": "~1.12.1",
-    "nativewind": "^4.1.23",
     "react": "18.2.0",
     "react-native": "0.74.5",
     "react-native-auto-size-text": "^1.1.1",
@@ -25,8 +24,10 @@
     "react-native-safe-area": "^0.5.1",
     "react-native-safe-area-context": "^4.14.0",
     "react-native-screens": "3.31.1",
-    "tailwindcss": "^3.4.16",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "expo-router": "~3.5.24",
+    "expo-linking": "~6.3.1",
+    "expo-constants": "~16.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -34,7 +35,6 @@
     "eslint-config-expo": "~7.1.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "postcss": "^8.4.49",
     "prettier": "^3.3.3"
   },
   "private": true
