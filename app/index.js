@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../screens/Home";
 import Loader from "../components/Loader";
 import { loadDatabase } from "../services/databaseService";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ export default function Index() {
                     }}
                 />
             </Stack.Navigator>
+            <StatusBar style="light" backgroundColor="transparent" />
         </SQLiteProvider>
     );
 }

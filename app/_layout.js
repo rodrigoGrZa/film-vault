@@ -1,12 +1,10 @@
 import { View, StyleSheet } from "react-native";
 import { Slot } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 
 export default function Layout() {
     return (
         <View style={styles.container}>
             <Slot />
-            <StatusBar style="light" backgroundColor="transparent" />
         </View>
     );
 }
