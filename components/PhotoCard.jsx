@@ -1,19 +1,24 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { Link } from "expo-router";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 
 export default function PhotoCard({ photo }) {
   return (
-    <View key={photo.id} style={styles.card}>
-      <Image source={{ uri: photo.imagePath }} style={styles.image} />
-      <View style={styles.infoContainer}>
-        <View style={styles.detailsRow}>
-          <Text style={styles.tag}>{photo.shot_at.slice(11, 16)}</Text>
-          <Text style={styles.tag}>f/{photo.aperture}</Text>
-          <Text style={styles.tag}>{photo.time}</Text>
-          <Text style={styles.tag}>ISO {photo.iso}</Text>
+    <Link href={`/${photo.id}`} asChild>
+      <Pressable>
+        <View key={photo.id} style={styles.card}>
+          <Image source={{ uri: photo.imagePath }} style={styles.image} />
+          <View style={styles.infoContainer}>
+            <View style={styles.detailsRow}>
+              <Text style={styles.tag}>{photo.shot_at.slice(11, 16)}</Text>
+              <Text style={styles.tag}>f/{photo.aperture}</Text>
+              <Text style={styles.tag}>{photo.time}</Text>
+              <Text style={styles.tag}>ISO {photo.iso}</Text>
+            </View>
+            <Text style={styles.title}>{photo.title}</Text>
+          </View>
         </View>
-        <Text style={styles.title}>{photo.title}</Text>
-      </View>
-    </View>
+      </Pressable>
+    </Link>
   );
 }
 

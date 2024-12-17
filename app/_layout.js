@@ -1,10 +1,42 @@
 import { View, StyleSheet } from "react-native";
-import { Slot } from "expo-router";
+import { Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { SQLiteProvider } from "expo-sqlite";
+import Loader from "../components/Loader";
+import { loadDatabase } from "../services/databaseService";
+import { StatusBar } from "expo-status-bar";
 
 export default function Layout() {
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+        const prepareApp = async () => {
+            try {
+                await loadDatabase();
+                setIsReady(true);
+            } catch (error) {
+                console.error("Error inicializando la base de datos:", error);
+            }
+        };
+
+        prepareApp();
+    }, []);
+
+    if (!isReady) {
+        return <Loader />;
+    }
     return (
         <View style={styles.container}>
-            <Slot />
+            <SQLiteProvider databaseName="coppermind.db" useSuspense>
+                <Stack
+                    screenOptions={{
+                        headerStyle: { backgroundColor: "#171717" },
+                        headerTintColor: "#fff",
+                        headerTitle: "Film Vault",
+                    }}
+                />
+            </SQLiteProvider>
+            <StatusBar style="light" backgroundColor="transparent" />
         </View>
     );
 }
@@ -12,6 +44,6 @@ export default function Layout() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#000", // Fondo negro para imitar el estilo de fondo oscuro
+        backgroundColor: "#101010",
     },
 });

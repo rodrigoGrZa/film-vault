@@ -38,13 +38,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: '#101010'
   },
   circle: {
     width: 70,
     height: 70,
     borderWidth: 2,
-    borderColor: "#000",
+    borderColor: "#F4962A",
     borderRadius: 35,
   },
 });

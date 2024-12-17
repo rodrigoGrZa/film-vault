@@ -1,50 +1,43 @@
+import { useSQLiteContext } from "expo-sqlite";
 import { useEffect, useState } from "react";
-import { SQLiteProvider } from "expo-sqlite";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../screens/Home";
-import Loader from "../components/Loader";
-import { loadDatabase } from "../services/databaseService";
-import { StatusBar } from "expo-status-bar";
-
-const Stack = createNativeStackNavigator();
+import { ScrollView, StyleSheet } from "react-native";
+import PhotoCard from "../components/PhotoCard";
 
 export default function Index() {
-    const [isReady, setIsReady] = useState(false);
+  const [images, setImages] = useState([]);
+  const db = useSQLiteContext();
 
-    useEffect(() => {
-        const prepareApp = async () => {
-            try {
-                await loadDatabase();
-                setIsReady(true);
-            } catch (error) {
-                console.error("Error inicializando la base de datos:", error);
-            }
-        };
+  useEffect(() => {
+    db.withTransactionAsync(async () => {
+      await getData();
+    });
+  }, [db]);
 
-        prepareApp();
-    }, []);
+  async function getData() {
+    const result = await db.getAllAsync(`SELECT * FROM PHOTOS`);
+    setImages(result);
+  }
 
-    if (!isReady) {
-        return <Loader />;
-    }
+  async function deleteImage(id) {
+    db.withTransactionAsync(async () => {
+      await db.runAsync(`DELETE FROM PHOTOS WHERE id = ?;`, [id]);
+      await getData();
+    });
+  }
 
-    return (
-        <SQLiteProvider databaseName="coppermind.db" useSuspense>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    component={Home}
-                    options={{
-                        headerTitle: "Film Vault",
-                        headerLargeTitle: true,
-                        headerStyle: {
-                            backgroundColor: '#171717',
-                        },
-                        headerTintColor: '#fff',
-                    }}
-                />
-            </Stack.Navigator>
-            <StatusBar style="light" backgroundColor="transparent" />
-        </SQLiteProvider>
-    );
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={{ padding: 6, paddingVertical: 10 }}>
+      {images.map((photo) => (
+        <PhotoCard key={photo.id} photo={photo} />
+      ))}
+    </ScrollView>
+  );
+  
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#101010', 
+    color: 'white', 
+  },
+});

@@ -11,12 +11,12 @@ export const fetchAndSaveFilms = async () => {
     const db = await openDatabaseAsync("coppermind.db");
 
     for (const film of films) {
-      const { iso, brand, model, is_35mm, is_color, process, imageUrl } = film;
+      const { iso, brand, name, formatThirtyFive, color, staticImageUrl } = film;
 
       await db.runAsync(
-        `INSERT INTO FILM (iso, brand, model, is_35mm, is_color, process, imageUrl) 
-         VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [iso, brand, model, is_35mm ? 1 : 0, is_color ? 1 : 0, process, imageUrl]
+        `INSERT INTO FILM (iso, brand, model, is_35mm, is_color, imageUrl) 
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [iso, brand, name, formatThirtyFive ? 1 : 0, color ? 1 : 0, staticImageUrl]
       );
     }
 
