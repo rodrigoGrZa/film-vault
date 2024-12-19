@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 
 export default function PhotoCard({ photo }) {
   return (
-    <Link href={`/${photo.id}`} asChild>
+    <Link href={`/detail/${photo.id}`} asChild>
       <Pressable>
         <View key={photo.id} style={styles.card}>
           <Image source={{ uri: photo.imagePath }} style={styles.image} />

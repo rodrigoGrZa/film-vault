@@ -8,3 +8,4 @@ export const TimerIcon = (props) => <Ionicons name="timer" size={24} color="whit
 export const PencilIcon = (props) => <Ionicons name="pencil" size={24} color="white" {...props} />;
 export const CheckmarkIcon = (props) => <Ionicons name="checkmark" size={24} color="white" {...props} />;
 export const SaveIcon = (props) => <Ionicons name="save" size={24} color="white" {...props} />;
+export const PlusIcon = (props) => <Ionicons name="add" size={24} color="white" {...props} />;
